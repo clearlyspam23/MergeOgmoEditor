@@ -1,4 +1,9 @@
-﻿				 ________ ________ __________ ________
+﻿This is a modification of the Ogmo Editor, meant for internal use with the project Merge to Survive
+As such, this Editor is protected under the same license as the Ogmo Editor, seen below.
+
+The original code for the Ogmo editor can be found at https://bitbucket.org/MattThorson/ogmoeditor
+
+				 ________ ________ __________ ________
 				|   __   |        |          |        |
 				|  |  |  |   _____|          |   _    |
 				|  |__|  |  |___  |   |  |   |  |_|   |

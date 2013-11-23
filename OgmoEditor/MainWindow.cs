@@ -612,5 +612,12 @@ namespace OgmoEditor
         }
 
         #endregion
+
+        private void runLevelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Ogmo.Project == null)
+                return;
+
+        }
     }
 }

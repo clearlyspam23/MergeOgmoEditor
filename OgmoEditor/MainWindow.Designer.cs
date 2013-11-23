@@ -643,6 +643,7 @@
             this.runLevelToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.runLevelToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.runLevelToolStripMenuItem.Text = "Run Level";
+            this.runLevelToolStripMenuItem.Click += new System.EventHandler(this.runLevelToolStripMenuItem_Click);
             // 
             // MainWindow
             // 

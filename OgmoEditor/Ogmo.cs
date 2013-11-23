@@ -57,7 +57,7 @@ namespace OgmoEditor
         static public event LevelCallback OnLevelClosed;
         static public event LevelCallback OnLevelChanged;
 
-        static public string javaDirectory;
+        static public string javaExe;
 
         [STAThread]
         static void Main(string[] args)
@@ -133,7 +133,7 @@ namespace OgmoEditor
             Application.ApplicationExit += onApplicationExit;
 
             //Get the path to java
-            javaDirectory = System.IO.Path.Combine(GetJavaInstallationPath(), "bin\\java.exe");
+            javaExe = System.IO.Path.Combine(GetJavaInstallationPath(), "bin\\java.exe");
         }
 
         static void MainWindow_Shown(object sender, EventArgs e)

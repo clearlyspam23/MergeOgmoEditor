@@ -8,6 +8,7 @@ using System.IO;
 using System.Drawing;
 using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelEditors;
+using System.Diagnostics;
 
 namespace OgmoEditor.LevelData
 {
@@ -327,5 +328,15 @@ namespace OgmoEditor.LevelData
         }
 
         #endregion
+
+        public bool run()
+        {
+            if (!Save())
+                return false;
+            Process p = new Process();
+            p.StartInfo.FileName = Ogmo.javaExe;
+            p.StartInfo.Arguments = "-jar \"" + Ogmo.Project.FullJarFilename + "\" -level \"" + SavePath + "\"";
+            return false;
+        }
     }
 }
