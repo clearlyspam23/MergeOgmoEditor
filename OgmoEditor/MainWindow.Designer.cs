@@ -83,6 +83,8 @@
             this.entitySelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.utilitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resaveLevelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shiftRenamerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.swapRenamerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MasterTabControl = new System.Windows.Forms.TabControl();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tabPageContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -91,8 +93,8 @@
             this.closeOthersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.duplicateLevelToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.shiftRenamerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.swapRenamerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.runLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             this.tabPageContextMenuStrip.SuspendLayout();
@@ -254,7 +256,9 @@
             this.closeOtherLevelsToolStripMenuItem,
             this.duplicateLevelToolStripMenuItem,
             this.saveAsImageToolStripMenuItem,
-            this.saveCameraAsImageToolStripMenuItem});
+            this.saveCameraAsImageToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.runLevelToolStripMenuItem});
             this.levelToolStripMenuItem.Enabled = false;
             this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
             this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -553,6 +557,20 @@
             this.resaveLevelsToolStripMenuItem.Text = "Batch Resaver";
             this.resaveLevelsToolStripMenuItem.Click += new System.EventHandler(this.resaveLevelsToolStripMenuItem_Click);
             // 
+            // shiftRenamerToolStripMenuItem
+            // 
+            this.shiftRenamerToolStripMenuItem.Name = "shiftRenamerToolStripMenuItem";
+            this.shiftRenamerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.shiftRenamerToolStripMenuItem.Text = "Shift Renamer";
+            this.shiftRenamerToolStripMenuItem.Click += new System.EventHandler(this.shiftRenamerToolStripMenuItem_Click);
+            // 
+            // swapRenamerToolStripMenuItem
+            // 
+            this.swapRenamerToolStripMenuItem.Name = "swapRenamerToolStripMenuItem";
+            this.swapRenamerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.swapRenamerToolStripMenuItem.Text = "Swap Renamer";
+            this.swapRenamerToolStripMenuItem.Click += new System.EventHandler(this.swapRenamerToolStripMenuItem_Click);
+            // 
             // MasterTabControl
             // 
             this.MasterTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -613,19 +631,18 @@
             this.duplicateLevelToolStripMenuItem1.Text = "Duplicate Level";
             this.duplicateLevelToolStripMenuItem1.Click += new System.EventHandler(this.duplicateLevelToolStripMenuItem_Click);
             // 
-            // shiftRenamerToolStripMenuItem
+            // toolStripSeparator8
             // 
-            this.shiftRenamerToolStripMenuItem.Name = "shiftRenamerToolStripMenuItem";
-            this.shiftRenamerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.shiftRenamerToolStripMenuItem.Text = "Shift Renamer";
-            this.shiftRenamerToolStripMenuItem.Click += new System.EventHandler(this.shiftRenamerToolStripMenuItem_Click);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(222, 6);
             // 
-            // swapRenamerToolStripMenuItem
+            // runLevelToolStripMenuItem
             // 
-            this.swapRenamerToolStripMenuItem.Name = "swapRenamerToolStripMenuItem";
-            this.swapRenamerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.swapRenamerToolStripMenuItem.Text = "Swap Renamer";
-            this.swapRenamerToolStripMenuItem.Click += new System.EventHandler(this.swapRenamerToolStripMenuItem_Click);
+            this.runLevelToolStripMenuItem.Enabled = false;
+            this.runLevelToolStripMenuItem.Name = "runLevelToolStripMenuItem";
+            this.runLevelToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.runLevelToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.runLevelToolStripMenuItem.Text = "Run Level";
             // 
             // MainWindow
             // 
@@ -719,5 +736,7 @@
         private System.Windows.Forms.ToolStripMenuItem resaveLevelsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shiftRenamerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem swapRenamerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem runLevelToolStripMenuItem;
     }
 }

@@ -35,11 +35,14 @@ namespace OgmoEditor
         public Size LevelMinimumSize;
         public Size LevelMaximumSize;
         public string Filename;
-        public string JarPathname;
         public AngleExportMode AngleMode;
         public bool CameraEnabled;
         public Size CameraSize;
         public bool ExportCameraPosition;
+
+        public string Jarname;
+        public string JarFoldername;
+        public string FullJarFilename;
 
         //Definitions
         public List<ValueDefinition> LevelValueDefinitions;
@@ -57,8 +60,10 @@ namespace OgmoEditor
             BackgroundColor = OgmoColor.DefaultBackgroundColor;
             GridColor = OgmoColor.DefaultGridColor;
             Filename = "";
+            Jarname = "";
+            FullJarFilename = "";
             LevelDefaultSize = LevelMinimumSize = LevelMaximumSize = new Size(640, 480);
-            CameraEnabled = false;
+            CameraEnabled = true;
             CameraSize = new Size(640, 480);
             ExportCameraPosition = false;
 
@@ -86,7 +91,6 @@ namespace OgmoEditor
             BackgroundColor = copy.BackgroundColor;
             GridColor = copy.GridColor;
             Filename = copy.Filename;
-            JarPathname = copy.JarPathname;
             LevelDefaultSize = copy.LevelDefaultSize;
             LevelMinimumSize = copy.LevelMinimumSize;
             LevelMaximumSize = copy.LevelMaximumSize;
@@ -94,6 +98,10 @@ namespace OgmoEditor
             CameraEnabled = copy.CameraEnabled;
             CameraSize = copy.CameraSize;
             ExportCameraPosition = copy.ExportCameraPosition;
+
+            Jarname = copy.Jarname;
+            FullJarFilename = copy.FullJarFilename;
+            JarFoldername = copy.JarFoldername;
 
             //Definitions
             LevelValueDefinitions = new List<ValueDefinition>();
@@ -121,6 +129,7 @@ namespace OgmoEditor
             foreach (var t in Tilesets)
                 t.GenerateBitmap();
         }
+
 
         public string ErrorCheck()
         {
@@ -289,6 +298,21 @@ namespace OgmoEditor
             Stream stream = new FileStream(filename, FileMode.Create);
             xs.Serialize(stream, this);
             stream.Close();
+        }
+
+        public void setJar(string fullpathname)
+        {
+            FullJarFilename = fullpathname;
+            int lastIndex = fullpathname.LastIndexOf('\\')+1;
+            if (lastIndex > fullpathname.Length)
+                lastIndex = fullpathname.Length;
+            Jarname = fullpathname.Substring(lastIndex);
+            JarFoldername = fullpathname.Substring(0, Math.Max(0, lastIndex-1));
+        }
+
+        public bool isJarValid()
+        {
+            return !string.IsNullOrEmpty(FullJarFilename);
         }
     }
 }

@@ -29,15 +29,12 @@ namespace OgmoEditor.ProjectEditors
             gridColorChooser.Color = project.GridColor;
             defaultWidthTextBox.Text = project.LevelDefaultSize.Width.ToString();
             defaultHeightTextBox.Text = project.LevelDefaultSize.Height.ToString();
-            minWidthTextBox.Text = project.LevelMinimumSize.Width.ToString();
-            minHeightTextBox.Text = project.LevelMinimumSize.Height.ToString();
-            maxWidthTextBox.Text = project.LevelMaximumSize.Width.ToString();
-            maxHeightTextBox.Text = project.LevelMaximumSize.Height.ToString();
             angleModeComboBox.SelectedIndex = (int)project.AngleMode;
-            cameraWidthTextBox.Enabled = cameraHeightTextBox.Enabled = exportCameraPositionCheckbox.Enabled = cameraEnabledCheckbox.Checked = project.CameraEnabled;
+            cameraWidthTextBox.Enabled = cameraHeightTextBox.Enabled = exportCameraPositionCheckbox.Enabled = project.CameraEnabled;
             cameraWidthTextBox.Text = project.CameraSize.Width.ToString();
             cameraHeightTextBox.Text = project.CameraSize.Height.ToString();
             exportCameraPositionCheckbox.Checked = project.ExportCameraPosition;
+            jarTextBox.Text = project.FullJarFilename;
 
             valuesEditor.SetList(project.LevelValueDefinitions);
         }
@@ -57,15 +54,15 @@ namespace OgmoEditor.ProjectEditors
             OgmoParse.Parse(ref project.LevelDefaultSize, defaultWidthTextBox, defaultHeightTextBox);
         }
 
-        private void minWidthTextBox_Validated(object sender, EventArgs e)
-        {
-            OgmoParse.Parse(ref project.LevelMinimumSize, minWidthTextBox, minHeightTextBox);
-        }
+        //private void minWidthTextBox_Validated(object sender, EventArgs e)
+        //{
+        //    OgmoParse.Parse(ref project.LevelMinimumSize, minWidthTextBox, minHeightTextBox);
+        //}
 
-        private void maxWidthTextBox_TextChanged(object sender, EventArgs e)
-        {
-            OgmoParse.Parse(ref project.LevelMaximumSize, maxWidthTextBox, maxHeightTextBox);
-        }
+        //private void maxWidthTextBox_TextChanged(object sender, EventArgs e)
+        //{
+        //    OgmoParse.Parse(ref project.LevelMaximumSize, maxWidthTextBox, maxHeightTextBox);
+        //}
 
         private void gridColorChooser_ColorChanged(OgmoColor color)
         {
@@ -79,7 +76,7 @@ namespace OgmoEditor.ProjectEditors
 
         private void cameraEnabledCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            cameraWidthTextBox.Enabled = cameraHeightTextBox.Enabled = exportCameraPositionCheckbox.Enabled = project.CameraEnabled = cameraEnabledCheckbox.Checked;
+            cameraWidthTextBox.Enabled = cameraHeightTextBox.Enabled = exportCameraPositionCheckbox.Enabled = project.CameraEnabled;
         }
 
         private void cameraWidthTextBox_Validated(object sender, EventArgs e)
@@ -90,6 +87,34 @@ namespace OgmoEditor.ProjectEditors
         private void exportCameraPositionCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             project.ExportCameraPosition = exportCameraPositionCheckbox.Checked;
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Get the file to the merge jar
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = Ogmo.JAR_FILE_FILTER;
+            if(!string.IsNullOrEmpty(project.FullJarFilename))
+                dialog.FileName = project.FullJarFilename;
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+            jarTextBox.Text = dialog.FileName;
+            project.setJar(jarTextBox.Text);
+        }
+
+        private void jarTextBox_Validated(object sender, EventArgs e)
+        {
+            project.setJar(jarTextBox.Text);
         }
 
     }

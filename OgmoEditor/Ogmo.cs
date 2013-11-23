@@ -24,6 +24,7 @@ namespace OgmoEditor
         public const string NEW_PROJECT_NAME = "New Project";
         public const string NEW_LEVEL_NAME = "Unsaved Level";
         public const string IMAGE_FILE_FILTER = "PNG image file|*.png|BMP image file|*.bmp";
+        public const string JAR_FILE_FILTER = "Java Archive File|*.jar";
         private const int RECENT_PROJECT_LIMIT = 10;
 
         public enum FinishProjectEditAction { None, CloseProject, SaveProject, LoadAndSaveProject };
@@ -54,7 +55,9 @@ namespace OgmoEditor
         static public event ProjectCallback OnProjectEdited;
         static public event LevelCallback OnLevelAdded;
         static public event LevelCallback OnLevelClosed;
-        static public event LevelCallback OnLevelChanged;        
+        static public event LevelCallback OnLevelChanged;
+
+        static public string javaDirectory;
 
         [STAThread]
         static void Main(string[] args)
@@ -68,6 +71,31 @@ namespace OgmoEditor
                 toLoad = "";
 
             Application.Run(MainWindow);
+        }
+
+        private static string GetJavaInstallationPath()
+        {
+            string environmentPath = Environment.GetEnvironmentVariable("JAVA_HOME");
+            if (!string.IsNullOrEmpty(environmentPath))
+            {
+                return environmentPath;
+            }
+
+            string javaKey = "SOFTWARE\\JavaSoft\\Java Runtime Environment\\";
+            using (Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(javaKey))
+            {
+                object o = rk.GetValue("CurrentVersion");
+                if (o == null)
+                {
+                    //do something
+                    return null;
+                }
+                string currentVersion = o.ToString();
+                using (Microsoft.Win32.RegistryKey key = rk.OpenSubKey(currentVersion))
+                {
+                    return key.GetValue("JavaHome").ToString();
+                }
+            }
         }
 
         static private void initialize()
@@ -103,6 +131,9 @@ namespace OgmoEditor
 
             //Add the exit event
             Application.ApplicationExit += onApplicationExit;
+
+            //Get the path to java
+            javaDirectory = System.IO.Path.Combine(GetJavaInstallationPath(), "bin\\java.exe");
         }
 
         static void MainWindow_Shown(object sender, EventArgs e)
