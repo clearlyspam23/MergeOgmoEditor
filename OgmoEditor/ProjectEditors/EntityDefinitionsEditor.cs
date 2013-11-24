@@ -26,7 +26,7 @@ namespace OgmoEditor.ProjectEditors
 
         public void LoadFromProject(Project project)
         {
-            entities = project.EntityDefinitions;
+            entities = project.EntityDefinitions["Entities"];
             foreach (var o in entities)
                 listBox.Items.Add(o.Name);
 
@@ -114,7 +114,7 @@ namespace OgmoEditor.ProjectEditors
 
         private EntityDefinition GetDefault()
         {
-            EntityDefinition def = new EntityDefinition();
+            EntityDefinition def = new EntityDefinition(Project.ENTITY_TYPES[0]);
 
             int i = 0;
             string name;

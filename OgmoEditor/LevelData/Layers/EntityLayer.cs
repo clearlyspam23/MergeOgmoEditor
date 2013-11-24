@@ -36,7 +36,7 @@ namespace OgmoEditor.LevelData.Layers
         {
             foreach (XmlElement e in xml.ChildNodes)
             {
-                if (Ogmo.Project.EntityDefinitions.Find(d => d.Name == e.Name) != null)
+                if (Ogmo.Project.EntityDefinitions[Definition.EntityType].Find(d => d.Name == e.Name) != null)
                     Entities.Add(new Entity(this, e));
             }
             return true;

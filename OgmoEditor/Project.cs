@@ -26,6 +26,9 @@ namespace OgmoEditor
     {
         public enum AngleExportMode { Radians, Degrees };
 
+        [XmlIgnore]
+        static public readonly List<string> ENTITY_TYPES = new List<string>(new string[] { "Entities", "Platforms"});
+
         //Serialized project properties
         public string OgmoVersion;
         public string Name;
@@ -48,7 +51,8 @@ namespace OgmoEditor
         public List<ValueDefinition> LevelValueDefinitions;
         public List<LayerDefinition> LayerDefinitions;
         public List<Tileset> Tilesets;
-        public List<EntityDefinition> EntityDefinitions;
+        [XmlIgnore]
+        public SerializableDictionary<String, List<EntityDefinition>> EntityDefinitions;
 
         //Events
         public event Ogmo.ProjectCallback OnPathChanged;
@@ -71,16 +75,20 @@ namespace OgmoEditor
             LevelValueDefinitions = new List<ValueDefinition>();
             LayerDefinitions = new List<LayerDefinition>();
             Tilesets = new List<Tileset>();
-            EntityDefinitions = new List<EntityDefinition>();
+            EntityDefinitions = new SerializableDictionary<String, List<EntityDefinition>>();
         }
 
         public void InitDefault()
         {
             //The default layer
-            GridLayerDefinition def = new GridLayerDefinition();
-            def.Name = "NewLayer0";
-            def.Grid = new Size(16, 16);
-            LayerDefinitions.Add(def);
+            foreach (String entityType in ENTITY_TYPES)
+            {
+                EntityLayerDefinition def = new EntityLayerDefinition(entityType);
+                EntityDefinitions.Add(entityType, new List<EntityDefinition>());
+                def.Name = entityType;
+                def.Grid = new Size(16, 16);
+                LayerDefinitions.Add(def);
+            }
         }
 
         public void CloneFrom(Project copy)
@@ -116,15 +124,27 @@ namespace OgmoEditor
             foreach (var d in copy.Tilesets)
                 Tilesets.Add(d.Clone());
 
-            EntityDefinitions = new List<EntityDefinition>();
-            foreach (var d in copy.EntityDefinitions)
-                EntityDefinitions.Add(d.Clone());
+            EntityDefinitions = new SerializableDictionary<String, List<EntityDefinition>>();
+            foreach (var entityType in ENTITY_TYPES)
+            {
+                List<EntityDefinition> defList = new List<EntityDefinition>();
+                EntityDefinitions[entityType] = defList;
+                foreach (var d in copy.EntityDefinitions[entityType])
+                {
+                    defList.Add(d.Clone());
+                }
+            }
         }
 
         public void LoadContent()
         {
-            foreach (var def in EntityDefinitions)
-                def.GenerateImages();
+            foreach (var entityType in ENTITY_TYPES)
+            {
+                foreach (var def in EntityDefinitions[entityType])
+                {
+                    def.GenerateImages();
+                }
+            }
 
             foreach (var t in Tilesets)
                 t.GenerateBitmap();
@@ -191,18 +211,20 @@ namespace OgmoEditor
              */
 
             //Check for duplicates and blanks
-            s += OgmoParse.CheckDefinitionList(EntityDefinitions);
-
-            foreach (var o in EntityDefinitions)
+            foreach (var entityType in ENTITY_TYPES)
             {
-                //Check Entity values for reserved words
-                s += OgmoParse.CheckEntityValues(o, o.ValueDefinitions);
+                s += OgmoParse.CheckDefinitionList(EntityDefinitions[entityType]);
 
-                //Image file must exist if it is using an image file to draw
-                if (o.ImageDefinition.DrawMode == EntityImageDefinition.DrawModes.Image)
-                    s += OgmoParse.CheckPath(o.ImageDefinition.ImagePath, SavedDirectory, "Object \"" + o.Name + "\" image file");
+                foreach (var o in EntityDefinitions[entityType])
+                {
+                    //Check Entity values for reserved words
+                    s += OgmoParse.CheckEntityValues(o, o.ValueDefinitions);
+
+                    //Image file must exist if it is using an image file to draw
+                    if (o.ImageDefinition.DrawMode == EntityImageDefinition.DrawModes.Image)
+                        s += OgmoParse.CheckPath(o.ImageDefinition.ImagePath, SavedDirectory, "Object \"" + o.Name + "\" image file");
+                }
             }
-
             /*
              *  VALUES
              */
