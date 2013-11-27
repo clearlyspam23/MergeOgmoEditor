@@ -102,10 +102,11 @@ namespace OgmoEditor.ProjectEditors
             }
             while (layerNameTaken(name));
 
-            GridLayerDefinition grid = new GridLayerDefinition();
-            grid.Name = name;
-            grid.Grid = new Size(16, 16);
-            return grid;
+            EntityLayerDefinition entityLayer = new EntityLayerDefinition();
+            entityLayer.Name = name;
+            entityLayer.EntityType = Project.ENTITY_TYPES[0];
+            entityLayer.Grid = new Size(16, 16);
+            return entityLayer;
         }
 
         private bool layerNameTaken(string name)
