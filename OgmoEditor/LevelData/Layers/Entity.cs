@@ -44,7 +44,7 @@ namespace OgmoEditor.LevelData.Layers
         public Entity(EntityLayer layer, XmlElement xml)
         {
             Layer = layer;
-            Definition = Ogmo.Project.EntityDefinitions[Definition.EntityType].Find(d => d.Name == xml.Name);
+            Definition = Ogmo.Project.EntityDefinitions[layer.Definition.EntityType].Find(d => d.Name == xml.Name);
 
             //ID
             if (xml.Attributes["id"] != null)

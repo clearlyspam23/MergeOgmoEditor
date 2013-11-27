@@ -24,7 +24,14 @@ namespace OgmoEditor.LevelData.Layers
 
         public override XmlElement GetXML(XmlDocument doc)
         {
-            XmlElement xml = doc.CreateElement(Definition.Name);
+            XmlElement xml = doc.CreateElement(Definition.Name); 
+            
+            XmlAttribute entityType;
+
+            //ID
+            entityType = doc.CreateAttribute("type");
+            entityType.InnerText = Definition.EntityType;
+            xml.Attributes.Append(entityType);
 
             foreach (Entity e in Entities)
                 xml.AppendChild(e.GetXML(doc));

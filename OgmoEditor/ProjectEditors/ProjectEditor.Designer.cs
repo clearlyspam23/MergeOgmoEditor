@@ -178,7 +178,7 @@
             // platformsEditor
             // 
             this.platformsEditor.entityType = null;
-            this.platformsEditor.Location = new System.Drawing.Point(8, 8);
+            this.platformsEditor.Location = new System.Drawing.Point(-4, 0);
             this.platformsEditor.Margin = new System.Windows.Forms.Padding(4);
             this.platformsEditor.Name = "platformsEditor";
             this.platformsEditor.Size = new System.Drawing.Size(573, 490);
