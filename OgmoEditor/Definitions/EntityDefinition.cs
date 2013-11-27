@@ -22,8 +22,8 @@ namespace OgmoEditor.Definitions
         public bool Rotatable;
         [XmlAttribute]
         public float RotateIncrement;
-
-        public String EntityType { get; private set; }
+        [XmlAttribute]
+        public String EntityType;
 
         public Size Size;
         public Point Origin;
@@ -34,10 +34,8 @@ namespace OgmoEditor.Definitions
         private Bitmap bitmap;
         private Bitmap buttonBitmap;
 
-        public EntityDefinition(String entityType)
-        {
-            EntityType = entityType;
-                
+        public EntityDefinition()
+        {       
             Limit = -1;
             Size = new Size(16, 16);
             RotateIncrement = 15;
@@ -52,7 +50,8 @@ namespace OgmoEditor.Definitions
 
         public EntityDefinition Clone()
         {
-            EntityDefinition def = new EntityDefinition(EntityType);
+            EntityDefinition def = new EntityDefinition();
+            def.EntityType = EntityType;
             def.Name = Name;
             def.Limit = Limit;
             def.ResizableX = ResizableX;

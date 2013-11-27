@@ -10,12 +10,11 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 {
     public class EntityLayerDefinition : LayerDefinition
     {
-        public String EntityType { get; private set; }
+        public String EntityType;
 
-        public EntityLayerDefinition(String entityType)
+        public EntityLayerDefinition()
             : base()
         {
-            EntityType = entityType;
             Image = "entity.png";
         }
 
@@ -31,7 +30,8 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 
         public override LayerDefinition Clone()
         {
-            EntityLayerDefinition def = new EntityLayerDefinition(EntityType);
+            EntityLayerDefinition def = new EntityLayerDefinition();
+            def.EntityType = EntityType;
             def.Name = Name;
             def.Grid = Grid;
             def.ScrollFactor = ScrollFactor;

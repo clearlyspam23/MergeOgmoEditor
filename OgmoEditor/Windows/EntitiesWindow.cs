@@ -73,12 +73,12 @@ namespace OgmoEditor.Windows
         private void onLayerChanged(LayerDefinition def, int index)
         {
             EditorVisible = def is EntityLayerDefinition;
+
+            CurrentEntity = null;
             if (def is EntityLayerDefinition)
             {
                 EntityLayerDefinition entityLayerDef = (EntityLayerDefinition)def;
 
-                foreach (EntityButton b in Controls)
-                    b.OnRemove();
                 Controls.Clear();
                 for (int i = 0; i < Ogmo.Project.EntityDefinitions[entityLayerDef.EntityType].Count; i++)
                     Controls.Add(new EntityButton(Ogmo.Project.EntityDefinitions[entityLayerDef.EntityType][i], 0, 1 + i * 25));

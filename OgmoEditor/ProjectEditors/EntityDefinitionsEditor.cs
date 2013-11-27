@@ -114,7 +114,7 @@ namespace OgmoEditor.ProjectEditors
 
         private EntityDefinition GetDefault()
         {
-            EntityDefinition def = new EntityDefinition(Project.ENTITY_TYPES[0]);
+            EntityDefinition def = new EntityDefinition();
 
             int i = 0;
             string name;
@@ -127,7 +127,7 @@ namespace OgmoEditor.ProjectEditors
             while (entities.Find(o => o.Name == name) != null);
 
             def.Name = name;
-
+            def.EntityType = Project.ENTITY_TYPES[0];
             return def;
         }
 

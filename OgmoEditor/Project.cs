@@ -51,7 +51,6 @@ namespace OgmoEditor
         public List<ValueDefinition> LevelValueDefinitions;
         public List<LayerDefinition> LayerDefinitions;
         public List<Tileset> Tilesets;
-        [XmlIgnore]
         public SerializableDictionary<String, List<EntityDefinition>> EntityDefinitions;
 
         //Events
@@ -83,10 +82,11 @@ namespace OgmoEditor
             //The default layer
             foreach (String entityType in ENTITY_TYPES)
             {
-                EntityLayerDefinition def = new EntityLayerDefinition(entityType);
+                EntityLayerDefinition def = new EntityLayerDefinition();
                 EntityDefinitions.Add(entityType, new List<EntityDefinition>());
                 def.Name = entityType;
                 def.Grid = new Size(16, 16);
+                def.EntityType = entityType;
                 LayerDefinitions.Add(def);
             }
         }
