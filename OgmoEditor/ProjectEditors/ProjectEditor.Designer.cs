@@ -32,7 +32,7 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
             this.entitiesTabPage = new System.Windows.Forms.TabPage();
-            this.objectsEditor = new OgmoEditor.ProjectEditors.EntityDefinitionsEditor();
+            this.entitiesEditor = new OgmoEditor.ProjectEditors.EntityDefinitionsEditor();
             this.tilesetsTabPage = new System.Windows.Forms.TabPage();
             this.tilesetsEditor = new OgmoEditor.ProjectEditors.TilesetsEditor();
             this.layersTabPage = new System.Windows.Forms.TabPage();
@@ -40,11 +40,14 @@
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.settingsEditor = new OgmoEditor.ProjectEditors.SettingsEditor();
             this.tabControl = new System.Windows.Forms.TabControl();
+            this.platformsTabPage = new System.Windows.Forms.TabPage();
+            this.platformsEditor = new OgmoEditor.ProjectEditors.EntityDefinitionsEditor();
             this.entitiesTabPage.SuspendLayout();
             this.tilesetsTabPage.SuspendLayout();
             this.layersTabPage.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
             this.tabControl.SuspendLayout();
+            this.platformsTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -70,7 +73,7 @@
             // 
             // entitiesTabPage
             // 
-            this.entitiesTabPage.Controls.Add(this.objectsEditor);
+            this.entitiesTabPage.Controls.Add(this.entitiesEditor);
             this.entitiesTabPage.Location = new System.Drawing.Point(4, 22);
             this.entitiesTabPage.Name = "entitiesTabPage";
             this.entitiesTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -79,13 +82,14 @@
             this.entitiesTabPage.Text = "Entities";
             this.entitiesTabPage.UseVisualStyleBackColor = true;
             // 
-            // objectsEditor
+            // entitiesEditor
             // 
-            this.objectsEditor.Location = new System.Drawing.Point(-4, 0);
-            this.objectsEditor.Margin = new System.Windows.Forms.Padding(4);
-            this.objectsEditor.Name = "objectsEditor";
-            this.objectsEditor.Size = new System.Drawing.Size(573, 490);
-            this.objectsEditor.TabIndex = 0;
+            this.entitiesEditor.entityType = null;
+            this.entitiesEditor.Location = new System.Drawing.Point(-4, 0);
+            this.entitiesEditor.Margin = new System.Windows.Forms.Padding(4);
+            this.entitiesEditor.Name = "entitiesEditor";
+            this.entitiesEditor.Size = new System.Drawing.Size(573, 490);
+            this.entitiesEditor.TabIndex = 0;
             // 
             // tilesetsTabPage
             // 
@@ -146,25 +150,46 @@
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.settingsTabPage);
             this.tabControl.Controls.Add(this.layersTabPage);
             this.tabControl.Controls.Add(this.tilesetsTabPage);
             this.tabControl.Controls.Add(this.entitiesTabPage);
+            this.tabControl.Controls.Add(this.platformsTabPage);
             this.tabControl.Location = new System.Drawing.Point(2, 3);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(581, 516);
             this.tabControl.TabIndex = 0;
             // 
+            // platformsTabPage
+            // 
+            this.platformsTabPage.Controls.Add(this.platformsEditor);
+            this.platformsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.platformsTabPage.Name = "platformsTabPage";
+            this.platformsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.platformsTabPage.Size = new System.Drawing.Size(573, 490);
+            this.platformsTabPage.TabIndex = 4;
+            this.platformsTabPage.Text = "Platforms";
+            this.platformsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // platformsEditor
+            // 
+            this.platformsEditor.entityType = null;
+            this.platformsEditor.Location = new System.Drawing.Point(8, 8);
+            this.platformsEditor.Margin = new System.Windows.Forms.Padding(4);
+            this.platformsEditor.Name = "platformsEditor";
+            this.platformsEditor.Size = new System.Drawing.Size(573, 490);
+            this.platformsEditor.TabIndex = 1;
+            // 
             // ProjectEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(591, 569);
+            this.ClientSize = new System.Drawing.Size(581, 559);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.tabControl);
@@ -180,6 +205,7 @@
             this.layersTabPage.ResumeLayout(false);
             this.settingsTabPage.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
+            this.platformsTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -195,7 +221,9 @@
         private System.Windows.Forms.TabControl tabControl;
         private SettingsEditor settingsEditor;
         private LayerDefinitionsEditor layersEditor;
-        private EntityDefinitionsEditor objectsEditor;
+        private EntityDefinitionsEditor entitiesEditor;
         private TilesetsEditor tilesetsEditor;
+        private System.Windows.Forms.TabPage platformsTabPage;
+        private EntityDefinitionsEditor platformsEditor;
     }
 }
