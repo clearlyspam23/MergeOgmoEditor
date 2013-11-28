@@ -114,6 +114,7 @@
     <Compile Include="Definitions\ValueDefinitions\FloatValueDefinition.cs" />
     <Compile Include="Definitions\ValueDefinitions\IntValueDefinition.cs" />
     <Compile Include="Definitions\ValueDefinitions\StringValueDefinition.cs" />
+    <Compile Include="EntityType.cs" />
     <Compile Include="ImagePreviewer.cs">
       <SubType>UserControl</SubType>
     </Compile>

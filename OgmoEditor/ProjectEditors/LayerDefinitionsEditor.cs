@@ -104,7 +104,7 @@ namespace OgmoEditor.ProjectEditors
 
             EntityLayerDefinition entityLayer = new EntityLayerDefinition();
             entityLayer.Name = name;
-            entityLayer.EntityType = Project.ENTITY_TYPES[0];
+            entityLayer.EntityType = EntityType.Entity;
             entityLayer.Grid = new Size(16, 16);
             return entityLayer;
         }

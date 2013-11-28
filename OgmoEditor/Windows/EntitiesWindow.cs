@@ -61,8 +61,8 @@ namespace OgmoEditor.Windows
             foreach (EntityButton b in Controls)
                 b.OnRemove();
             Controls.Clear();
-            for (int i = 0; i < project.EntityDefinitions[Project.ENTITY_TYPES[0]].Count; i++)
-                Controls.Add(new EntityButton(project.EntityDefinitions[Project.ENTITY_TYPES[0]][i], 0, 1 + i * 25));
+            for (int i = 0; i < project.EntityDefinitions[EntityType.Entity].Count; i++)
+                Controls.Add(new EntityButton(project.EntityDefinitions[EntityType.Entity][i], 0, 1 + i * 25));
 
             SetObject(null);
         }
@@ -77,11 +77,13 @@ namespace OgmoEditor.Windows
             CurrentEntity = null;
             if (def is EntityLayerDefinition)
             {
-                EntityLayerDefinition entityLayerDef = (EntityLayerDefinition)def;
-
+                EntityLayerDefinition entityLayerDef = (EntityLayerDefinition) def;
+                List<EntityDefinition> entities = Ogmo.Project.EntityDefinitions[entityLayerDef.EntityType];
+                foreach (EntityButton b in Controls)
+                    b.OnRemove();
                 Controls.Clear();
-                for (int i = 0; i < Ogmo.Project.EntityDefinitions[entityLayerDef.EntityType].Count; i++)
-                    Controls.Add(new EntityButton(Ogmo.Project.EntityDefinitions[entityLayerDef.EntityType][i], 0, 1 + i * 25));
+                for (int i = 0; i < entities.Count; i++)
+                    Controls.Add(new EntityButton(entities[i], 0, 1 + i * 25));
             }
         }
     }

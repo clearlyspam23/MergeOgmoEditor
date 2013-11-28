@@ -25,7 +25,7 @@ namespace OgmoEditor.ProjectEditors
         }
 
 
-        public string entityType { get; set; }
+        public EntityType entityType { get; set; }
 
         public void LoadFromProject(Project project)
         {
@@ -130,7 +130,7 @@ namespace OgmoEditor.ProjectEditors
             while (entities.Find(o => o.Name == name) != null);
 
             def.Name = name;
-            def.EntityType = Project.ENTITY_TYPES[0];
+            def.EntityType = EntityType.Entity;
             return def;
         }
 

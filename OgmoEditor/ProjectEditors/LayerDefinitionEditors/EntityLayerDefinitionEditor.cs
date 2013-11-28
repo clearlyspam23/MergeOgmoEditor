@@ -19,8 +19,10 @@ namespace OgmoEditor.ProjectEditors.LayerDefinitionEditors
             this.def = def;
             InitializeComponent();
             Location = new Point(206, 128);
-            
-            EntityTypeComboBox.Items.AddRange(Project.ENTITY_TYPES.ToArray());
+            foreach (EntityType entityType in Enum.GetValues(typeof(EntityType)))
+            {
+                EntityTypeComboBox.Items.Add(entityType);
+            }
             EntityTypeComboBox.SelectedItem = def.EntityType;
         }
 
@@ -33,7 +35,7 @@ namespace OgmoEditor.ProjectEditors.LayerDefinitionEditors
 
         private void EntityTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            def.EntityType = (string) EntityTypeComboBox.SelectedItem;
+            def.EntityType = (EntityType) EntityTypeComboBox.SelectedItem;
         }
     }
 }

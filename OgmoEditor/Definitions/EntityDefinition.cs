@@ -23,7 +23,7 @@ namespace OgmoEditor.Definitions
         [XmlAttribute]
         public float RotateIncrement;
         [XmlAttribute]
-        public String EntityType;
+        public EntityType EntityType;
 
         public Size Size;
         public Point Origin;

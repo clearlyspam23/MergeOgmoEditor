@@ -7,6 +7,6 @@ namespace OgmoEditor
 {
     public enum EntityType
     {
-        ENTITY, PLATFORM
+        Entity, Platform
     }
 }

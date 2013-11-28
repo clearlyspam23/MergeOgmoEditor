@@ -22,7 +22,22 @@ namespace OgmoEditor.Clipboard
 
         public override bool CanPaste(Layer layer)
         {
-            return layer is EntityLayer;
+            if (layer is EntityLayer)
+            {
+                EntityLayer e = (EntityLayer)layer;
+                if (entities.Count() > 0)
+                {
+                    return entities[0].Definition.EntityType == e.Definition.EntityType;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public override void Paste(LevelEditor editor, Layer layer)

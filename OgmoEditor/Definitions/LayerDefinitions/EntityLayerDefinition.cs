@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using OgmoEditor;
 using OgmoEditor.ProjectEditors.LayerDefinitionEditors;
 using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelData;
@@ -11,13 +12,13 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 {
     public class EntityLayerDefinition : LayerDefinition
     {
-        public String EntityType;
+        public EntityType EntityType;
 
         public EntityLayerDefinition()
             : base()
         {
             Image = "entity.png";
-            EntityType = Project.ENTITY_TYPES[0];
+            EntityType = EntityType.Entity;
         }
 
         public override UserControl GetEditor()

@@ -33,9 +33,7 @@ namespace OgmoEditor.ProjectEditors
             settingsEditor.LoadFromProject(newProject);
             layersEditor.LoadFromProject(newProject);
             tilesetsEditor.LoadFromProject(newProject);
-            entitiesEditor.entityType = "Entities";
             entitiesEditor.LoadFromProject(newProject);
-            platformsEditor.entityType = "Platforms";
             platformsEditor.LoadFromProject(newProject);
 
             //Events
