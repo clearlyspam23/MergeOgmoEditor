@@ -14,7 +14,7 @@ namespace OgmoEditor.Windows
         public PlayerEntityWindow(Project project)
         {
             InitializeComponent();
-            foreach (var o in project.EntityDefinitions["Entities"])
+            foreach (var o in project.EntityDefinitions[EntityType.Entity])
                 listBox.Items.Add(o.Name);
             if(project.playerEntity!=null)
                 listBox.SelectedIndex = listBox.Items.IndexOf(project.playerEntity);
