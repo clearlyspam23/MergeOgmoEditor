@@ -114,6 +114,7 @@
     <Compile Include="Definitions\ValueDefinitions\FloatValueDefinition.cs" />
     <Compile Include="Definitions\ValueDefinitions\IntValueDefinition.cs" />
     <Compile Include="Definitions\ValueDefinitions\StringValueDefinition.cs" />
+    <Compile Include="EntityType.cs" />
     <Compile Include="ImagePreviewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -260,6 +261,12 @@
     </Compile>
     <Compile Include="LevelEditors\ValueEditors\ValueEditor.Designer.cs">
       <DependentUpon>ValueEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectEditors\LayerDefinitionEditors\EntityLayerDefinitionEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectEditors\LayerDefinitionEditors\EntityLayerDefinitionEditor.Designer.cs">
+      <DependentUpon>EntityLayerDefinitionEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="SerializableDictionary.cs" />
     <Compile Include="Windows\AboutWindow.cs">
@@ -534,6 +541,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LevelEditors\ValueEditors\StringValueEditor.resx">
       <DependentUpon>StringValueEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectEditors\LayerDefinitionEditors\EntityLayerDefinitionEditor.resx">
+      <DependentUpon>EntityLayerDefinitionEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\AboutWIndow.resx">
       <DependentUpon>AboutWindow.cs</DependentUpon>

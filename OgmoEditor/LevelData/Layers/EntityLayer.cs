@@ -30,7 +30,7 @@ namespace OgmoEditor.LevelData.Layers
 
             //ID
             entityType = doc.CreateAttribute("type");
-            entityType.InnerText = Definition.EntityType;
+            entityType.InnerText = Definition.EntityType.ToString();
             xml.Attributes.Append(entityType);
 
             foreach (Entity e in Entities)

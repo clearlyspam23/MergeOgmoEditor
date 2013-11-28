@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Xml.Serialization;
 using System.Diagnostics;
 using System.Collections;
+using OgmoEditor;
 using OgmoEditor.Definitions.ValueDefinitions;
 using OgmoEditor.Definitions;
 using OgmoEditor.ProjectEditors;
@@ -25,9 +26,6 @@ namespace OgmoEditor
     public class Project
     {
         public enum AngleExportMode { Radians, Degrees };
-
-        [XmlIgnore]
-        static public readonly List<string> ENTITY_TYPES = new List<string>(new string[] { "Entities", "Platforms"});
 
         //Serialized project properties
         public string OgmoVersion;
@@ -53,7 +51,7 @@ namespace OgmoEditor
         public List<ValueDefinition> LevelValueDefinitions;
         public List<LayerDefinition> LayerDefinitions;
         public List<Tileset> Tilesets;
-        public SerializableDictionary<String, List<EntityDefinition>> EntityDefinitions;
+        public SerializableDictionary<EntityType, List<EntityDefinition>> EntityDefinitions;
 
         //Events
         public event Ogmo.ProjectCallback OnPathChanged;
@@ -76,17 +74,17 @@ namespace OgmoEditor
             LevelValueDefinitions = new List<ValueDefinition>();
             LayerDefinitions = new List<LayerDefinition>();
             Tilesets = new List<Tileset>();
-            EntityDefinitions = new SerializableDictionary<String, List<EntityDefinition>>();
+            EntityDefinitions = new SerializableDictionary<EntityType, List<EntityDefinition>>();
         }
 
         public void InitDefault()
         {
             //The default layer
-            foreach (String entityType in ENTITY_TYPES)
+            foreach (EntityType entityType in Enum.GetValues(typeof(EntityType)))
             {
                 EntityLayerDefinition def = new EntityLayerDefinition();
                 EntityDefinitions.Add(entityType, new List<EntityDefinition>());
-                def.Name = entityType;
+                def.Name = entityType.ToString();
                 def.Grid = new Size(16, 16);
                 def.EntityType = entityType;
                 LayerDefinitions.Add(def);
@@ -126,8 +124,8 @@ namespace OgmoEditor
             foreach (var d in copy.Tilesets)
                 Tilesets.Add(d.Clone());
 
-            EntityDefinitions = new SerializableDictionary<String, List<EntityDefinition>>();
-            foreach (var entityType in ENTITY_TYPES)
+            EntityDefinitions = new SerializableDictionary<EntityType, List<EntityDefinition>>();
+            foreach (EntityType entityType in Enum.GetValues(typeof(EntityType)))
             {
                 List<EntityDefinition> defList = new List<EntityDefinition>();
                 EntityDefinitions[entityType] = defList;
@@ -140,7 +138,7 @@ namespace OgmoEditor
 
         public void LoadContent()
         {
-            foreach (var entityType in ENTITY_TYPES)
+            foreach (EntityType entityType in Enum.GetValues(typeof(EntityType)))
             {
                 foreach (var def in EntityDefinitions[entityType])
                 {
@@ -213,7 +211,7 @@ namespace OgmoEditor
              */
 
             //Check for duplicates and blanks
-            foreach (var entityType in ENTITY_TYPES)
+            foreach (EntityType entityType in Enum.GetValues(typeof(EntityType)))
             {
                 s += OgmoParse.CheckDefinitionList(EntityDefinitions[entityType]);
 

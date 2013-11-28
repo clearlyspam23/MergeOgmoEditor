@@ -5,8 +5,8 @@ using System.Text;
 
 namespace OgmoEditor
 {
-    enum EntityType
+    public enum EntityType
     {
-        ENTITY, PLATFORM
+        Entity, Platform
     }
 }

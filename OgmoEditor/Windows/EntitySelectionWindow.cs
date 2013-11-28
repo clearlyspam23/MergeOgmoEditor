@@ -310,6 +310,8 @@ namespace OgmoEditor.Windows
         private void onLayerChanged(LayerDefinition def, int index)
         {
             EditorVisible = def is EntityLayerDefinition;
+
+            selection.Clear();
         }
     }
 }

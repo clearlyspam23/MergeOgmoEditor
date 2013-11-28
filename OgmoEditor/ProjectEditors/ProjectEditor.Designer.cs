@@ -84,7 +84,7 @@
             // 
             // entitiesEditor
             // 
-            this.entitiesEditor.entityType = null;
+            this.entitiesEditor.entityType = EntityType.Entity;
             this.entitiesEditor.Location = new System.Drawing.Point(-4, 0);
             this.entitiesEditor.Margin = new System.Windows.Forms.Padding(4);
             this.entitiesEditor.Name = "entitiesEditor";
@@ -177,7 +177,7 @@
             // 
             // platformsEditor
             // 
-            this.platformsEditor.entityType = null;
+            this.platformsEditor.entityType = EntityType.Platform;
             this.platformsEditor.Location = new System.Drawing.Point(-4, 0);
             this.platformsEditor.Margin = new System.Windows.Forms.Padding(4);
             this.platformsEditor.Name = "platformsEditor";
