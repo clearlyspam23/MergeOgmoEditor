@@ -9,6 +9,7 @@ using System.Drawing;
 using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelEditors;
 using System.Diagnostics;
+using OgmoEditor.Windows;
 
 namespace OgmoEditor.LevelData
 {
@@ -333,10 +334,21 @@ namespace OgmoEditor.LevelData
         {
             if (!Save())
                 return false;
+            PlayerEntityWindow window = new PlayerEntityWindow(Ogmo.Project);
+            if (window.ShowDialog() == DialogResult.Cancel)
+                return false;
+            if (window.listBox.SelectedIndex != -1)
+                Ogmo.Project.playerEntity = window.listBox.Items[window.listBox.SelectedIndex] as string;
             Process p = new Process();
+            p.StartInfo = new ProcessStartInfo();
             p.StartInfo.FileName = Ogmo.javaExe;
             p.StartInfo.Arguments = "-jar \"" + Ogmo.Project.FullJarFilename + "\" -level \"" + SavePath + "\"";
-            return false;
+            if (!string.IsNullOrEmpty(Ogmo.Project.playerEntity))
+                p.StartInfo.Arguments = p.StartInfo.Arguments + " -player \"" + Ogmo.Project.playerEntity + "\"";
+            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.UseShellExecute = false;
+            p.Start();
+            return true;
         }
     }
 }

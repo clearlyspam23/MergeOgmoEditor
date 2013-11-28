@@ -615,7 +615,7 @@ namespace OgmoEditor
 
         private void runLevelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Ogmo.Project == null)
+            if (Ogmo.Project == null || Ogmo.CurrentLevel == null)
                 return;
 
         }

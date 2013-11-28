@@ -83,6 +83,7 @@ namespace OgmoEditor.ProjectEditors
             this.listBox.FormattingEnabled = true;
             this.listBox.Location = new System.Drawing.Point(4, 4);
             this.listBox.Name = "listBox";
+            this.listBox.ScrollAlwaysVisible = true;
             this.listBox.Size = new System.Drawing.Size(184, 420);
             this.listBox.TabIndex = 48;
             this.listBox.TabStop = false;

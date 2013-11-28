@@ -47,6 +47,8 @@ namespace OgmoEditor
         public string JarFoldername;
         public string FullJarFilename;
 
+        public string playerEntity;
+
         //Definitions
         public List<ValueDefinition> LevelValueDefinitions;
         public List<LayerDefinition> LayerDefinitions;

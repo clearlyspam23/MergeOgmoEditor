@@ -430,6 +430,12 @@
     <Compile Include="Windows\OgmoWindow.Designer.cs">
       <DependentUpon>OgmoWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\PlayerEntityWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\PlayerEntityWindow.Designer.cs">
+      <DependentUpon>PlayerEntityWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\PreferencesWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -593,6 +599,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\OgmoWindow.resx">
       <DependentUpon>OgmoWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\PlayerEntityWindow.resx">
+      <DependentUpon>PlayerEntityWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\PreferencesWindow.resx">
       <DependentUpon>PreferencesWindow.cs</DependentUpon>
