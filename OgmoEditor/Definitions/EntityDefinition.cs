@@ -103,6 +103,14 @@ namespace OgmoEditor.Definitions
             graphics.TranslateTransform(-position.X, -position.Y);
         }
 
+        private string getBitmapFilename()
+        {
+            string ans = Path.Combine(Ogmo.Project.SavedDirectory, ImageDefinition.ImagePath);
+            if (!File.Exists(ans))
+                ans = ImageDefinition.ImagePath;
+            return ans;
+        }
+
         public void Draw(Graphics graphics, Point position, float angle, DrawUtil.AlphaMode alphaMode)
         {
             Draw(graphics, position, Size, angle, alphaMode);
@@ -129,10 +137,24 @@ namespace OgmoEditor.Definitions
                     break;
 
                 case EntityImageDefinition.DrawModes.Image:
-                    if (!File.Exists(Path.Combine(Ogmo.Project.SavedDirectory, ImageDefinition.ImagePath)))
+                    if (!File.Exists(getBitmapFilename()))
                         bitmap = null;
                     else
-                        bitmap = new Bitmap(Path.Combine(Ogmo.Project.SavedDirectory, ImageDefinition.ImagePath));
+                        bitmap = new Bitmap(getBitmapFilename());
+                    break;
+                case EntityImageDefinition.DrawModes.Frame:
+                    if (File.Exists(ImageDefinition.ImagePath)&&ImageDefinition.dimensions!=null)
+                    {
+                        using (Bitmap temp = new Bitmap(ImageDefinition.ImagePath))
+                        {
+                            bitmap = new Bitmap(ImageDefinition.dimensions.Width, ImageDefinition.dimensions.Height);
+                            Graphics g = Graphics.FromImage(bitmap);
+                            g.DrawImage(temp, 0, 0, ImageDefinition.dimensions, GraphicsUnit.Pixel);
+                            
+                        }
+                    }
+                    else
+                        bitmap = null;
                     break;
             }
 
@@ -158,12 +180,13 @@ namespace OgmoEditor.Definitions
     [XmlRoot("Image")]
     public struct EntityImageDefinition
     {
-        public enum DrawModes { Rectangle, Image };
+        public enum DrawModes { Rectangle, Image, Frame };
 
         [XmlAttribute]
         public DrawModes DrawMode;
         [XmlAttribute]
         public string ImagePath;
+        public Rectangle dimensions;
         [XmlAttribute]
         public bool Tiled;
 

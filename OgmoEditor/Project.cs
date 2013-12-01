@@ -19,6 +19,7 @@ using OgmoEditor.Definitions;
 using OgmoEditor.ProjectEditors;
 using OgmoEditor.LevelEditors;
 using System.Deployment.Application;
+using System.Web.Script.Serialization;
 
 namespace OgmoEditor
 {
@@ -65,9 +66,10 @@ namespace OgmoEditor
             Filename = "";
             Jarname = "";
             FullJarFilename = "";
-            LevelDefaultSize = LevelMinimumSize = LevelMaximumSize = new Size(640, 480);
+            LevelDefaultSize = LevelMinimumSize = new Size(800, 600);
+            LevelMaximumSize = new Size(100000, 100000);
             CameraEnabled = true;
-            CameraSize = new Size(640, 480);
+            CameraSize = new Size(800, 600);
             ExportCameraPosition = false;
 
             //Definitions
@@ -89,6 +91,10 @@ namespace OgmoEditor
                 def.EntityType = entityType;
                 LayerDefinitions.Add(def);
             }
+            StringValueDefinition background = new StringValueDefinition();
+            background.Name = "Background";
+            background.Default = "darkroom";
+            LevelValueDefinitions.Add(background);
         }
 
         public void CloneFrom(Project copy)
@@ -221,8 +227,8 @@ namespace OgmoEditor
                     s += OgmoParse.CheckEntityValues(o, o.ValueDefinitions);
 
                     //Image file must exist if it is using an image file to draw
-                    if (o.ImageDefinition.DrawMode == EntityImageDefinition.DrawModes.Image)
-                        s += OgmoParse.CheckPath(o.ImageDefinition.ImagePath, SavedDirectory, "Object \"" + o.Name + "\" image file");
+                    //if (o.ImageDefinition.DrawMode == EntityImageDefinition.DrawModes.Image)
+                    //    s += OgmoParse.CheckPath(o.ImageDefinition.ImagePath, SavedDirectory, "Object \"" + o.Name + "\" image file");
                 }
             }
             /*
@@ -330,11 +336,12 @@ namespace OgmoEditor
                 lastIndex = fullpathname.Length;
             Jarname = fullpathname.Substring(lastIndex);
             JarFoldername = fullpathname.Substring(0, Math.Max(0, lastIndex-1));
+            Ogmo.MainWindow.checkEnableRun();
+            if (Ogmo.isJarValid(FullJarFilename))
+            {
+                Ogmo.loadAll(this, JarFoldername);
+            }
         }
 
-        public bool isJarValid()
-        {
-            return !string.IsNullOrEmpty(FullJarFilename);
-        }
     }
 }

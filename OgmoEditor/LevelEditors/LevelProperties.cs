@@ -26,11 +26,15 @@ namespace OgmoEditor.LevelEditors
             //Init textboxes
             sizeXTextBox.Text = level.Size.Width.ToString();
             sizeYTextBox.Text = level.Size.Height.ToString();
+            cameraWidthBox.Text = level.CameraSize.Width.ToString();
+            cameraHeightBox.Text = level.CameraSize.Height.ToString();
+            startXBox.Text = level.startLocation.X.ToString();
+            startYBox.Text = level.startLocation.Y.ToString();
             minSizeLabel.Text = "Minimum Size: " + level.Project.LevelMinimumSize.Width + " x " + level.Project.LevelMinimumSize.Height;
             maxSizeLabel.Text = "Maximum Size: " + level.Project.LevelMaximumSize.Width + " x " + level.Project.LevelMaximumSize.Height;
 
             //Values
-            int yy = 100;
+            int yy = 152;
             if (level.Values != null)
             {
                 //Store the old values
@@ -78,6 +82,17 @@ namespace OgmoEditor.LevelEditors
             OgmoParse.Parse(ref s, sizeXTextBox, sizeYTextBox);
             if (s != level.Size)
                 Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(new LevelResizeAction(level, s));
+            Size c = level.CameraSize;
+            OgmoParse.Parse(ref c, cameraWidthBox, cameraHeightBox);
+            if (c.Width > s.Width)
+                c.Width = s.Width;
+            if (c.Height > s.Height)
+                c.Height = s.Height;
+            level.CameraSize = c;
+
+            Point p = level.startLocation;
+            OgmoParse.Parse(ref p, startXBox, startYBox);
+            level.startLocation = p;
 
             Close();
         }

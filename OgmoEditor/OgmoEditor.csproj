@@ -9,9 +9,10 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OgmoEditor</RootNamespace>
-    <AssemblyName>OgmoEditor</AssemblyName>
+    <AssemblyName>MergeToSurviveEditor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>publish/</PublishUrl>
@@ -24,14 +25,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://www.ogmoeditor.com/download/</InstallUrl>
-    <UpdateUrl>http://www.ogmoeditor.com/download/</UpdateUrl>
-    <SupportUrl>http://www.ogmoeditor.com/</SupportUrl>
-    <ProductName>Ogmo Editor</ProductName>
-    <PublisherName>Ogmo Editor</PublisherName>
+    <InstallUrl>https://www.dropbox.com/sh/gg8d2lswwi3iz1m/kUss8MMr9u/</InstallUrl>
+    <UpdateUrl>https://www.dropbox.com/sh/4egwpzf43hjs8c0/AH5ERbFdIg/</UpdateUrl>
+    <ProductName>Merge To Survive Editor</ProductName>
+    <PublisherName>Merge To Survive Editor</PublisherName>
     <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>10</ApplicationRevision>
     <ApplicationVersion>2.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -84,6 +85,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -741,15 +743,15 @@
     <Content Include="proj32.ico" />
   </ItemGroup>
   <ItemGroup>
-    <FileAssociation Include=".oel">
+    <FileAssociation Include=".mel">
       <Visible>False</Visible>
-      <Description>Ogmo Editor Level File</Description>
+      <Description>Merge Editor Level File</Description>
       <Progid>LevelFile</Progid>
       <DefaultIcon>lvl32.ico</DefaultIcon>
     </FileAssociation>
-    <FileAssociation Include=".oep">
+    <FileAssociation Include=".mep">
       <Visible>False</Visible>
-      <Description>Ogmo Editor Project File</Description>
+      <Description>Merge Editor Project File</Description>
       <Progid>ProjectFile</Progid>
       <DefaultIcon>proj32.ico</DefaultIcon>
     </FileAssociation>

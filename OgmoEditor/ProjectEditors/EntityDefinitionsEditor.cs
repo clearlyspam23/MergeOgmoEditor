@@ -18,6 +18,7 @@ namespace OgmoEditor.ProjectEditors
 
         private List<EntityDefinition> entities;
         private string directory;
+        private Project currentProject;
 
         public EntityDefinitionsEditor()
         {
@@ -27,6 +28,9 @@ namespace OgmoEditor.ProjectEditors
 
         public EntityType entityType { get; set; }
 
+        public delegate List<EntityDefinition> loadFunction(string jarname);
+        public loadFunction onRefresh { get; set; }
+
         public void LoadFromProject(Project project)
         {
             entities = project.EntityDefinitions[entityType];
@@ -34,6 +38,7 @@ namespace OgmoEditor.ProjectEditors
                 listBox.Items.Add(o.Name);
 
             directory = project.SavedDirectory;
+            currentProject = project;
         }
 
         private void SetControlsFromObject(EntityDefinition def)
@@ -92,6 +97,8 @@ namespace OgmoEditor.ProjectEditors
 
         private void DisableControls()
         {
+            addButton.Enabled = false;
+
             removeButton.Enabled = false;
             moveUpButton.Enabled = false;
             moveDownButton.Enabled = false;
@@ -182,10 +189,11 @@ namespace OgmoEditor.ProjectEditors
 
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBox.SelectedIndex == -1)
-                DisableControls();
-            else
-                SetControlsFromObject(entities[listBox.SelectedIndex]);
+            DisableControls();
+            //if (listBox.SelectedIndex == -1)
+            //    DisableControls();
+            //else
+            //    SetControlsFromObject(entities[listBox.SelectedIndex]);
         }
 
         private void addButton_Click(object sender, EventArgs e)
@@ -389,5 +397,19 @@ namespace OgmoEditor.ProjectEditors
         }
 
         #endregion
+
+        private void refreshButton_Click(object sender, EventArgs e)
+        {
+            if (onRefresh != null)
+            {
+                entities.Clear();
+                List<EntityDefinition> defs= onRefresh(currentProject.JarFoldername);
+                foreach (EntityDefinition d in defs)
+                {
+                    if (d != null)
+                        entities.Add(d);
+                }
+            }
+        }
     }
 }

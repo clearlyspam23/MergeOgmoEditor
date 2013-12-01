@@ -26,6 +26,8 @@ namespace OgmoEditor.LevelData
         public List<Layer> Layers { get; private set; }
         public List<Value> Values { get; private set; }
         public Point CameraPosition;
+        public Size CameraSize;
+        public Point startLocation;
 
         public Level(Project project, string filename)
         {
@@ -46,6 +48,8 @@ namespace OgmoEditor.LevelData
             {
                 //Initialize size
                 Size = Project.LevelDefaultSize;
+                CameraSize = Project.CameraSize;
+                startLocation = new Point(64, 64);
 
                 //Initialize layers
                 Layers = new List<Layer>();
@@ -176,10 +180,31 @@ namespace OgmoEditor.LevelData
                 level.Attributes.Append(a);
             }
 
+            XmlElement start = doc.CreateElement("start");
+
+            a = doc.CreateAttribute("x");
+            a.InnerText = startLocation.X.ToString();
+            start.Attributes.Append(a);
+
+            a = doc.CreateAttribute("y");
+            a.InnerText = startLocation.Y.ToString();
+            start.Attributes.Append(a);
+
+            level.AppendChild(start);
+
+            XmlElement cam = doc.CreateElement("camera");
+
+            a = doc.CreateAttribute("width");
+            a.InnerText = CameraSize.Width.ToString();
+            cam.Attributes.Append(a);
+
+            a = doc.CreateAttribute("height");
+            a.InnerText = CameraSize.Height.ToString();
+            cam.Attributes.Append(a);
+
             //Export camera position
             if (Ogmo.Project.ExportCameraPosition)
             {
-                XmlElement cam = doc.CreateElement("camera");
 
                 a = doc.CreateAttribute("x");
                 a.InnerText = CameraPosition.X.ToString();
@@ -189,8 +214,9 @@ namespace OgmoEditor.LevelData
                 a.InnerText = CameraPosition.Y.ToString();
                 cam.Attributes.Append(a);
 
-                level.AppendChild(cam);
             }
+
+            level.AppendChild(cam);
 
             //Export the level values
             if (Values != null)
@@ -249,13 +275,40 @@ namespace OgmoEditor.LevelData
                 Size = size;
             }
 
+            if (level.GetElementsByTagName("start").Count > 0)
+            {
+                XmlElement start = (XmlElement)level.GetElementsByTagName("start")[0];
+                startLocation.X = Convert.ToInt32(start.Attributes["x"].InnerText);
+                startLocation.Y = Convert.ToInt32(start.Attributes["y"].InnerText);
+            }
+
             //Import the camera position
             if (level.GetElementsByTagName("camera").Count > 0)
             {
                 XmlElement cam = (XmlElement)level.GetElementsByTagName("camera")[0];
-                CameraPosition.X = Convert.ToInt32(cam.Attributes["x"].InnerText);
-                CameraPosition.Y = Convert.ToInt32(cam.Attributes["y"].InnerText);
+                XmlAttribute a = null;
+                a = cam.Attributes["width"];
+                if(a!=null)
+                    CameraSize.Width = Convert.ToInt32(a.InnerText);
+                a = cam.Attributes["height"];
+                if(a!=null)
+                    CameraSize.Height = Convert.ToInt32(a.InnerText);
+                a = cam.Attributes["x"];
+                if(a!=null)
+                    CameraPosition.X = Convert.ToInt32(a.InnerText);
+                a = cam.Attributes["y"];
+                if(a!=null)
+                    CameraPosition.Y = Convert.ToInt32(a.InnerText);
             }
+
+            if (CameraSize.Width < Ogmo.Project.LevelMinimumSize.Width)
+                CameraSize.Width = Ogmo.Project.LevelMinimumSize.Width;
+            else if (CameraSize.Width > Size.Width)
+                CameraSize.Width = Size.Width;
+            if (CameraSize.Height < Ogmo.Project.LevelMinimumSize.Height)
+                CameraSize.Height = Ogmo.Project.LevelMinimumSize.Height;
+            else if (CameraSize.Height > Size.Height)
+                CameraSize.Height = Size.Height;
 
             //Import the level values
             //Initialize values
@@ -347,7 +400,12 @@ namespace OgmoEditor.LevelData
                 p.StartInfo.Arguments = p.StartInfo.Arguments + " -player \"" + Ogmo.Project.playerEntity + "\"";
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardError = true;
             p.Start();
+            string output = p.StandardOutput.ReadToEnd();
+            string error = p.StandardError.ReadToEnd();
+            p.WaitForExit();
             return true;
         }
     }

@@ -65,6 +65,10 @@ namespace OgmoEditor.LevelData.Layers
             else
                 Size.Height = Definition.Size.Height;
 
+            Position.X = Position.X - Size.Width/2;
+            Position.Y = Layer.Level.Bounds.Height - Position.Y;
+            Position.Y = Position.Y - Size.Height/2;
+
             //Rotation
             if (Definition.Rotatable && xml.Attributes["angle"] != null)
                 Angle = Ogmo.Project.ImportAngle(xml.Attributes["angle"].InnerText);
@@ -126,10 +130,14 @@ namespace OgmoEditor.LevelData.Layers
 
             //Position
             a = doc.CreateAttribute("x");
-            a.InnerText = Position.X.ToString();
+            int x = Position.X + Size.Width/2;
+            a.InnerText = x.ToString();
             xml.Attributes.Append(a);
+            
             a = doc.CreateAttribute("y");
-            a.InnerText = Position.Y.ToString();
+            int y = Position.Y + Size.Height / 2;
+            y = Layer.Level.Bounds.Height - y;
+            a.InnerText = y.ToString();
             xml.Attributes.Append(a);
 
             //Size

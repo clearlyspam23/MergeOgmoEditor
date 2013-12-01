@@ -12,15 +12,18 @@ using OgmoEditor.LevelEditors.Tools;
 using OgmoEditor.ProjectEditors;
 using OgmoEditor.Windows;
 using System.Diagnostics;
+using System.Web.Script.Serialization;
+using System.Collections;
+using System.Drawing;
 
 namespace OgmoEditor
 {
     static public class Ogmo
     {
-        public const string PROJECT_EXT = ".oep";
-        public const string LEVEL_EXT = ".oel";
-        public const string PROJECT_FILTER = "Ogmo Editor Project File|*" + PROJECT_EXT;
-        public const string LEVEL_FILTER = "Ogmo Editor Level File|*" + LEVEL_EXT;
+        public const string PROJECT_EXT = ".mep";
+        public const string LEVEL_EXT = ".mel";
+        public const string PROJECT_FILTER = "Merge Editor Project File|*" + PROJECT_EXT;
+        public const string LEVEL_FILTER = "Merge Editor Level File|*" + LEVEL_EXT;
         public const string NEW_PROJECT_NAME = "New Project";
         public const string NEW_LEVEL_NAME = "Unsaved Level";
         public const string IMAGE_FILE_FILTER = "PNG image file|*.png|BMP image file|*.bmp";
@@ -160,6 +163,173 @@ namespace OgmoEditor
             logStream.Close();
             file.Close();
         }
+
+        public static bool isJarValid(string FullJarFilename)
+        {
+            return !string.IsNullOrEmpty(FullJarFilename) && File.Exists(FullJarFilename);
+        }
+
+        #region Entity Loading
+
+        public static List<EntityDefinition> loadEntities(string JarFoldername)
+        {
+            List<EntityDefinition> ans = new List<EntityDefinition>();
+            if (string.IsNullOrEmpty(JarFoldername))
+                return ans;
+            string entitiesDir = System.IO.Path.Combine(JarFoldername, "assets", "entities");
+            if (Directory.Exists(entitiesDir))
+            {
+                string[] files = Directory.GetFiles(entitiesDir, "*.json", SearchOption.TopDirectoryOnly);
+                foreach (string s in files)
+                {
+                    EntityDefinition def = loadEntity(JarFoldername, s);
+                    if (def != null)
+                        ans.Add(def);
+                }
+            }
+            return ans;
+        }
+
+        private static EntityDefinition loadEntity(string JarFoldername, string filename)
+        {
+            try
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                Dictionary<String, Object> dict = serializer.Deserialize<Dictionary<String, Object>>(File.ReadAllText(filename));
+                EntityDefinition definition = new EntityDefinition();
+                definition.EntityType = EntityType.Entity;
+                definition.Limit = -1;
+                definition.Name = Path.GetFileNameWithoutExtension(filename);
+                definition.Size = new Size();
+                if (dict.ContainsKey("dimensions"))
+                {
+                    Dictionary<String, Object> dims = dict["dimensions"] as Dictionary<String, Object>;
+                    if(dims["x"] is int)
+                        definition.Size.Width = (int)dims["x"];
+                    else
+                        definition.Size.Width = (int)((decimal)dims["x"]);
+                    if(dims["y"] is int)
+                        definition.Size.Height = (int)dims["y"];
+                    else
+                        definition.Size.Height = (int)((decimal)dims["y"]);
+                }
+                ArrayList list = dict["animations"] as ArrayList;
+                string animName = list[0] as string;
+                string animFile = getAnimationFile(JarFoldername, animName);
+                Dictionary<String, Object> anim = serializer.Deserialize<Dictionary<String, Object>>(File.ReadAllText(animFile));
+                string imageName = anim["path"] as string;
+                string imageFile = getTextureFile(JarFoldername, imageName);
+                definition.ImageDefinition.DrawMode = EntityImageDefinition.DrawModes.Frame;
+                using (Bitmap image = new Bitmap(imageFile))
+                {
+                    int frameWidth = 0;
+                    int frameHeight = 0;
+                    if (anim.ContainsKey("frameWidth"))
+                        frameWidth = (int)anim["frameWidth"];
+                    else
+                        frameWidth = image.Width / ((int)anim["cols"]);
+                    if (anim.ContainsKey("frameHeight"))
+                        frameHeight = (int)anim["frameHeight"];
+                    else
+                        frameHeight = image.Height / ((int)anim["rows"]);
+                    Rectangle frameRect = new Rectangle(0, 0, frameWidth, frameHeight);
+                    definition.ImageDefinition.dimensions = frameRect;
+                    definition.ImageDefinition.ImagePath = imageFile;
+                }
+                return definition;
+            }
+            catch (Exception)
+            {
+
+            }
+            return null;
+        }
+
+        private static string getAnimationDirectory(string basePath)
+        {
+            return Path.Combine(basePath, "assets", "animations");
+        }
+
+        private static string getAnimationFile(string basePath, string filename)
+        {
+            if (filename.IndexOf('.') == -1)
+                filename += ".json";
+            return Path.Combine(getAnimationDirectory(basePath), filename);
+        }
+
+        private static string getTextureDirectory(string basePath)
+        {
+            return Path.Combine(basePath, "assets", "art");
+        }
+
+        private static string getTextureFile(string basePath, string filename)
+        {
+            if (filename.IndexOf('.') == -1)
+                filename += ".png";
+            return Path.Combine(getTextureDirectory(basePath), filename);
+        }
+
+        public static List<EntityDefinition> loadPlatforms(string JarFoldername)
+        {
+            List<EntityDefinition> ans = new List<EntityDefinition>();
+            if (string.IsNullOrEmpty(JarFoldername))
+                return ans;
+            string entitiesDir = System.IO.Path.Combine(JarFoldername, "assets", "platforms");
+            if (Directory.Exists(entitiesDir))
+            {
+                string[] files = Directory.GetFiles(entitiesDir, "*.json", SearchOption.TopDirectoryOnly);
+                foreach (string s in files)
+                {
+                    EntityDefinition def = loadPlatform(JarFoldername, s);
+                    if (def != null)
+                        ans.Add(def);
+                }
+            }
+            return ans;
+        }
+
+        private static EntityDefinition loadPlatform(string JarFoldername, string filename)
+        {
+            try
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                Dictionary<String, Object> dict = serializer.Deserialize<Dictionary<String, Object>>(File.ReadAllText(filename));
+                EntityDefinition definition = new EntityDefinition();
+                definition.EntityType = EntityType.Platform;
+                definition.Limit = -1;
+                definition.ResizableX = definition.ResizableY = true;
+                definition.Name = Path.GetFileNameWithoutExtension(filename);
+                if (dict.ContainsKey("texture"))
+                {
+                    string imagename = dict["texture"] as string;
+                    if (!string.IsNullOrEmpty(imagename))
+                    {
+                        definition.ImageDefinition.DrawMode = EntityImageDefinition.DrawModes.Image;
+                        definition.ImageDefinition.ImagePath = getTextureFile(JarFoldername, imagename);
+                    }
+                }
+                return definition;
+            }
+            catch (Exception)
+            {
+
+            }
+            return null;
+        }
+
+        public static void loadAll(Project project, string JarFoldername)
+        {
+            project.EntityDefinitions[EntityType.Entity].Clear();
+            project.EntityDefinitions[EntityType.Platform].Clear();
+            foreach(EntityDefinition d in loadEntities(JarFoldername))
+                if(d!=null)
+                    project.EntityDefinitions[EntityType.Entity].Add(d);
+            foreach (EntityDefinition d in loadPlatforms(JarFoldername))
+                if (d != null)
+                    project.EntityDefinitions[EntityType.Platform].Add(d);
+        }
+
+        #endregion
 
         #region Project Handlers
 

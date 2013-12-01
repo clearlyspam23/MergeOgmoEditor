@@ -74,6 +74,7 @@ namespace OgmoEditor.ProjectEditors
             this.imageFileTiledCheckBox = new System.Windows.Forms.CheckBox();
             this.valuesEditor = new OgmoEditor.ProjectEditors.ValueDefinitionEditors.ValueDefinitionsEditor();
             this.nodeGhostCheckBox = new System.Windows.Forms.CheckBox();
+            this.refreshButton = new System.Windows.Forms.Button();
             this.rectangleGraphicPanel.SuspendLayout();
             this.imageFileGraphicPanel.SuspendLayout();
             this.SuspendLayout();
@@ -84,7 +85,7 @@ namespace OgmoEditor.ProjectEditors
             this.listBox.Location = new System.Drawing.Point(4, 4);
             this.listBox.Name = "listBox";
             this.listBox.ScrollAlwaysVisible = true;
-            this.listBox.Size = new System.Drawing.Size(184, 420);
+            this.listBox.Size = new System.Drawing.Size(184, 381);
             this.listBox.TabIndex = 48;
             this.listBox.TabStop = false;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
@@ -92,7 +93,7 @@ namespace OgmoEditor.ProjectEditors
             // moveDownButton
             // 
             this.moveDownButton.Enabled = false;
-            this.moveDownButton.Location = new System.Drawing.Point(98, 458);
+            this.moveDownButton.Location = new System.Drawing.Point(99, 423);
             this.moveDownButton.Name = "moveDownButton";
             this.moveDownButton.Size = new System.Drawing.Size(89, 23);
             this.moveDownButton.TabIndex = 47;
@@ -104,7 +105,7 @@ namespace OgmoEditor.ProjectEditors
             // moveUpButton
             // 
             this.moveUpButton.Enabled = false;
-            this.moveUpButton.Location = new System.Drawing.Point(4, 458);
+            this.moveUpButton.Location = new System.Drawing.Point(4, 422);
             this.moveUpButton.Name = "moveUpButton";
             this.moveUpButton.Size = new System.Drawing.Size(89, 23);
             this.moveUpButton.TabIndex = 46;
@@ -116,7 +117,7 @@ namespace OgmoEditor.ProjectEditors
             // removeButton
             // 
             this.removeButton.Enabled = false;
-            this.removeButton.Location = new System.Drawing.Point(99, 430);
+            this.removeButton.Location = new System.Drawing.Point(99, 394);
             this.removeButton.Name = "removeButton";
             this.removeButton.Size = new System.Drawing.Size(89, 23);
             this.removeButton.TabIndex = 45;
@@ -127,7 +128,8 @@ namespace OgmoEditor.ProjectEditors
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(4, 430);
+            this.addButton.Enabled = false;
+            this.addButton.Location = new System.Drawing.Point(3, 393);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(89, 23);
             this.addButton.TabIndex = 44;
@@ -539,10 +541,21 @@ namespace OgmoEditor.ProjectEditors
             this.nodeGhostCheckBox.UseVisualStyleBackColor = true;
             this.nodeGhostCheckBox.CheckedChanged += new System.EventHandler(this.nodeGhostCheckBox_CheckedChanged);
             // 
+            // refreshButton
+            // 
+            this.refreshButton.Location = new System.Drawing.Point(99, 454);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(89, 23);
+            this.refreshButton.TabIndex = 85;
+            this.refreshButton.Text = "Refresh";
+            this.refreshButton.UseVisualStyleBackColor = true;
+            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            // 
             // EntityDefinitionsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.nodeGhostCheckBox);
             this.Controls.Add(this.imageFileGraphicPanel);
             this.Controls.Add(this.rectangleGraphicPanel);
@@ -638,5 +651,6 @@ namespace OgmoEditor.ProjectEditors
         private System.Windows.Forms.CheckBox imageFileTiledCheckBox;
         private ImagePreviewer imagePreviewer;
         private System.Windows.Forms.CheckBox nodeGhostCheckBox;
+        private System.Windows.Forms.Button refreshButton;
     }
 }

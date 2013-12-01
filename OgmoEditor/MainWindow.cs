@@ -141,6 +141,7 @@ namespace OgmoEditor
             levelToolStripMenuItem.Enabled = true;
             viewToolStripMenuItem.Enabled = true;
             utilitiesToolStripMenuItem.Enabled = true;
+            checkEnableRun();
         }
 
         private void onProjectClose(Project project)
@@ -157,6 +158,7 @@ namespace OgmoEditor
 
             //Clear mouse/grid readouts
             MouseCoordinatesLabel.Text = GridCoordinatesLabel.Text = "";
+            checkEnableRun();
         }
 
         private void onLevelAdded(int index)
@@ -198,7 +200,15 @@ namespace OgmoEditor
                 closeOtherLevelsToolStripMenuItem.Enabled =
                 saveAsImageToolStripMenuItem.Enabled = index != -1;
 
+            checkEnableRun();
+
             saveCameraAsImageToolStripMenuItem.Enabled = index != -1 && Ogmo.Project.CameraEnabled;
+        }
+
+        public void checkEnableRun()
+        {
+            if (Ogmo.Project != null)
+                runLevelToolStripMenuItem.Enabled = Ogmo.isJarValid(Ogmo.Project.FullJarFilename)&&Ogmo.CurrentLevelIndex!=-1;
         }
 
         #endregion
@@ -615,9 +625,9 @@ namespace OgmoEditor
 
         private void runLevelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Ogmo.Project == null || Ogmo.CurrentLevel == null)
+            if (Ogmo.Project == null)
                 return;
-
+            Ogmo.Levels[getTargetLevel()].run();
         }
     }
 }

@@ -144,7 +144,13 @@ namespace OgmoEditor.Windows
         public void RefreshPosition()
         {
             if (selection.Count == 1)
-                positionLabel.Text = "( " + selection[0].Position.X.ToString() + ", " + selection[0].Position.Y.ToString() + " )";
+            {
+                Point display = new Point();
+                display.X = selection[0].Position.X + selection[0].Size.Width / 2;
+                display.Y = selection[0].Position.Y + selection[0].Size.Height / 2;
+                display.Y = Ogmo.CurrentLevel.Bounds.Height - display.Y;
+                positionLabel.Text = "( " + display.X.ToString() + ", " + display.Y.ToString() + " )";
+            }
         }
 
         public void RefreshSize()

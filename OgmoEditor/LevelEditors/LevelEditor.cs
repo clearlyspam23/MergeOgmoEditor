@@ -156,7 +156,7 @@ namespace OgmoEditor.LevelEditors
             if (Ogmo.Project.CameraEnabled)
             {
                 e.Graphics.Transform = LevelView.Matrix;
-                e.Graphics.DrawRectangle(DrawUtil.CameraRectPen, new Rectangle(Level.CameraPosition.X, Level.CameraPosition.Y, Ogmo.Project.CameraSize.Width, Ogmo.Project.CameraSize.Height));
+                e.Graphics.DrawRectangle(DrawUtil.CameraRectPen, new Rectangle(Level.CameraPosition.X, Level.CameraPosition.Y, Level.CameraSize.Width, Level.CameraSize.Height));
             }
         }
 
@@ -167,7 +167,7 @@ namespace OgmoEditor.LevelEditors
 
         public void SaveCameraAsImage()
         {
-            SaveLevelToImage(new Rectangle(Level.CameraPosition.X, Level.CameraPosition.Y, Ogmo.Project.CameraSize.Width, Ogmo.Project.CameraSize.Height));
+            SaveLevelToImage(new Rectangle(Level.CameraPosition.X, Level.CameraPosition.Y, Level.CameraSize.Width, Level.CameraSize.Height));
         }
 
         private void SaveLevelToImage(Rectangle area)
@@ -483,6 +483,8 @@ namespace OgmoEditor.LevelEditors
             //Update the mouse coord display
             MousePosition = LevelView.ScreenToEditor(e.Location);
             Point mouseDraw = Ogmo.Project.LayerDefinitions[Ogmo.LayersWindow.CurrentLayerIndex].SnapToGrid(MousePosition);
+            Rectangle size = Ogmo.CurrentLevel.Bounds;
+            mouseDraw.Y = size.Height - mouseDraw.Y;
             Point gridPos = Ogmo.Project.LayerDefinitions[Ogmo.LayersWindow.CurrentLayerIndex].ConvertToGrid(MousePosition);
             Ogmo.MainWindow.MouseCoordinatesLabel.Text = "Mouse: ( " + mouseDraw.X.ToString() + ", " + mouseDraw.Y.ToString() + " )";
             Ogmo.MainWindow.GridCoordinatesLabel.Text = "Grid: ( " + gridPos.X.ToString() + ", " + gridPos.Y.ToString() + " )";
